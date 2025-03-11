@@ -1802,5 +1802,11 @@
       <field type="uint64_t" name="timestamp">Timestamp in milliseconds since system boot</field>
       <field type="uint8_t" name="mode">Control mode (0: Manual, 1: Auto, 2:Remote, 3:Anchor, 4:Cruise)</field>
     </message>
+    <message id="50013" name="UI_TO_PX4_CRUISEPARAM">
+      <description>This Message Sent From UI to PX4 For Seting Cruise Param.</description>
+      <field type="uint64_t" name="timestamp">Timestamp in milliseconds since system boot</field>
+      <field type="float" name="target_speed"></field>
+      <field type="float" name="target_heading"></field>
+    </message>
   </messages>
 </mavlink>
