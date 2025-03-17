@@ -1808,5 +1808,10 @@
       <field type="float" name="target_speed"></field>
       <field type="float" name="target_heading"></field>
     </message>
+	<message id="50014" name="UI_TO_PX4_MISSIONSTATE">
+      <description>This Message Sent From UI to PX4 For Mission State.</description>
+      <field type="uint64_t" name="timestamp">Timestamp in milliseconds since system boot</field>
+      <field type="uint8_t" name="mission_state">mission state (0: Pause, 1: Resume)</field>
+    </message>
   </messages>
 </mavlink>
