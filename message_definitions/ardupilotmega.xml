@@ -1813,5 +1813,21 @@
       <field type="uint64_t" name="timestamp">Timestamp in milliseconds since system boot</field>
       <field type="uint8_t" name="mission_state">mission state (0: Pause, 1: Resume)</field>
     </message>
+    <message id="50015" name="BATTERY_SENSOR_INFO">
+      <description>battery  info </description>
+      <field type="uint64_t" name ="timestamp">time since system start (microseconds)</field>
+      <field type="float" name="string_current">bms current</field>
+      <field type="float" name="string_voltage">bms voltage</field>
+      <field type="float" name="string_soc">bms  soc</field>
+      <field type="uint32_t" name="alarm_code">bms error code</field>
+      <field type="uint8_t" name="battery_state">1- charge ,2-discharge</field>
+    </message>
+    <message id="50016" name="BATTERY_SENSOR_CONTROL">
+      <description>battery  control </description>
+      <field type="uint64_t" name ="timestamp">time since system start (microseconds)</field>
+      <field type="uint8_t" name="reset_alarm">1 reset alram ,others is invaliad</field>
+      <field type="uint8_t" name="battery_control_mode">1-charge ,2-discharge, others  is invaliad</field>
+      <field type="uint8_t" name="battery_control">2 on,3 off, others  is invaliad</field>
+      </message>
   </messages>
 </mavlink>

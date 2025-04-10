@@ -4516,6 +4516,132 @@ static void mavlink_test_ui_to_px4_missionstate(uint8_t system_id, uint8_t compo
 #endif
 }
 
+static void mavlink_test_battery_sensor_info(uint8_t system_id, uint8_t component_id, mavlink_message_t *last_msg)
+{
+#ifdef MAVLINK_STATUS_FLAG_OUT_MAVLINK1
+    mavlink_status_t *status = mavlink_get_channel_status(MAVLINK_COMM_0);
+        if ((status->flags & MAVLINK_STATUS_FLAG_OUT_MAVLINK1) && MAVLINK_MSG_ID_BATTERY_SENSOR_INFO >= 256) {
+            return;
+        }
+#endif
+    mavlink_message_t msg;
+        uint8_t buffer[MAVLINK_MAX_PACKET_LEN];
+        uint16_t i;
+    mavlink_battery_sensor_info_t packet_in = {
+        93372036854775807ULL,73.0,101.0,129.0,963498504,77
+    };
+    mavlink_battery_sensor_info_t packet1, packet2;
+        memset(&packet1, 0, sizeof(packet1));
+        packet1.timestamp = packet_in.timestamp;
+        packet1.string_current = packet_in.string_current;
+        packet1.string_voltage = packet_in.string_voltage;
+        packet1.string_soc = packet_in.string_soc;
+        packet1.alarm_code = packet_in.alarm_code;
+        packet1.battery_state = packet_in.battery_state;
+        
+        
+#ifdef MAVLINK_STATUS_FLAG_OUT_MAVLINK1
+        if (status->flags & MAVLINK_STATUS_FLAG_OUT_MAVLINK1) {
+           // cope with extensions
+           memset(MAVLINK_MSG_ID_BATTERY_SENSOR_INFO_MIN_LEN + (char *)&packet1, 0, sizeof(packet1)-MAVLINK_MSG_ID_BATTERY_SENSOR_INFO_MIN_LEN);
+        }
+#endif
+        memset(&packet2, 0, sizeof(packet2));
+    mavlink_msg_battery_sensor_info_encode(system_id, component_id, &msg, &packet1);
+    mavlink_msg_battery_sensor_info_decode(&msg, &packet2);
+        MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
+
+        memset(&packet2, 0, sizeof(packet2));
+    mavlink_msg_battery_sensor_info_pack(system_id, component_id, &msg , packet1.timestamp , packet1.string_current , packet1.string_voltage , packet1.string_soc , packet1.alarm_code , packet1.battery_state );
+    mavlink_msg_battery_sensor_info_decode(&msg, &packet2);
+        MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
+
+        memset(&packet2, 0, sizeof(packet2));
+    mavlink_msg_battery_sensor_info_pack_chan(system_id, component_id, MAVLINK_COMM_0, &msg , packet1.timestamp , packet1.string_current , packet1.string_voltage , packet1.string_soc , packet1.alarm_code , packet1.battery_state );
+    mavlink_msg_battery_sensor_info_decode(&msg, &packet2);
+        MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
+
+        memset(&packet2, 0, sizeof(packet2));
+        mavlink_msg_to_send_buffer(buffer, &msg);
+        for (i=0; i<mavlink_msg_get_send_buffer_length(&msg); i++) {
+            comm_send_ch(MAVLINK_COMM_0, buffer[i]);
+        }
+    mavlink_msg_battery_sensor_info_decode(last_msg, &packet2);
+        MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
+        
+        memset(&packet2, 0, sizeof(packet2));
+    mavlink_msg_battery_sensor_info_send(MAVLINK_COMM_1 , packet1.timestamp , packet1.string_current , packet1.string_voltage , packet1.string_soc , packet1.alarm_code , packet1.battery_state );
+    mavlink_msg_battery_sensor_info_decode(last_msg, &packet2);
+        MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
+
+#ifdef MAVLINK_HAVE_GET_MESSAGE_INFO
+    MAVLINK_ASSERT(mavlink_get_message_info_by_name("BATTERY_SENSOR_INFO") != NULL);
+    MAVLINK_ASSERT(mavlink_get_message_info_by_id(MAVLINK_MSG_ID_BATTERY_SENSOR_INFO) != NULL);
+#endif
+}
+
+static void mavlink_test_battery_sensor_control(uint8_t system_id, uint8_t component_id, mavlink_message_t *last_msg)
+{
+#ifdef MAVLINK_STATUS_FLAG_OUT_MAVLINK1
+    mavlink_status_t *status = mavlink_get_channel_status(MAVLINK_COMM_0);
+        if ((status->flags & MAVLINK_STATUS_FLAG_OUT_MAVLINK1) && MAVLINK_MSG_ID_BATTERY_SENSOR_CONTROL >= 256) {
+            return;
+        }
+#endif
+    mavlink_message_t msg;
+        uint8_t buffer[MAVLINK_MAX_PACKET_LEN];
+        uint16_t i;
+    mavlink_battery_sensor_control_t packet_in = {
+        93372036854775807ULL,29,96,163
+    };
+    mavlink_battery_sensor_control_t packet1, packet2;
+        memset(&packet1, 0, sizeof(packet1));
+        packet1.timestamp = packet_in.timestamp;
+        packet1.reset_alarm = packet_in.reset_alarm;
+        packet1.battery_control_mode = packet_in.battery_control_mode;
+        packet1.battery_control = packet_in.battery_control;
+        
+        
+#ifdef MAVLINK_STATUS_FLAG_OUT_MAVLINK1
+        if (status->flags & MAVLINK_STATUS_FLAG_OUT_MAVLINK1) {
+           // cope with extensions
+           memset(MAVLINK_MSG_ID_BATTERY_SENSOR_CONTROL_MIN_LEN + (char *)&packet1, 0, sizeof(packet1)-MAVLINK_MSG_ID_BATTERY_SENSOR_CONTROL_MIN_LEN);
+        }
+#endif
+        memset(&packet2, 0, sizeof(packet2));
+    mavlink_msg_battery_sensor_control_encode(system_id, component_id, &msg, &packet1);
+    mavlink_msg_battery_sensor_control_decode(&msg, &packet2);
+        MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
+
+        memset(&packet2, 0, sizeof(packet2));
+    mavlink_msg_battery_sensor_control_pack(system_id, component_id, &msg , packet1.timestamp , packet1.reset_alarm , packet1.battery_control_mode , packet1.battery_control );
+    mavlink_msg_battery_sensor_control_decode(&msg, &packet2);
+        MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
+
+        memset(&packet2, 0, sizeof(packet2));
+    mavlink_msg_battery_sensor_control_pack_chan(system_id, component_id, MAVLINK_COMM_0, &msg , packet1.timestamp , packet1.reset_alarm , packet1.battery_control_mode , packet1.battery_control );
+    mavlink_msg_battery_sensor_control_decode(&msg, &packet2);
+        MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
+
+        memset(&packet2, 0, sizeof(packet2));
+        mavlink_msg_to_send_buffer(buffer, &msg);
+        for (i=0; i<mavlink_msg_get_send_buffer_length(&msg); i++) {
+            comm_send_ch(MAVLINK_COMM_0, buffer[i]);
+        }
+    mavlink_msg_battery_sensor_control_decode(last_msg, &packet2);
+        MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
+        
+        memset(&packet2, 0, sizeof(packet2));
+    mavlink_msg_battery_sensor_control_send(MAVLINK_COMM_1 , packet1.timestamp , packet1.reset_alarm , packet1.battery_control_mode , packet1.battery_control );
+    mavlink_msg_battery_sensor_control_decode(last_msg, &packet2);
+        MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
+
+#ifdef MAVLINK_HAVE_GET_MESSAGE_INFO
+    MAVLINK_ASSERT(mavlink_get_message_info_by_name("BATTERY_SENSOR_CONTROL") != NULL);
+    MAVLINK_ASSERT(mavlink_get_message_info_by_id(MAVLINK_MSG_ID_BATTERY_SENSOR_CONTROL) != NULL);
+#endif
+}
+
 static void mavlink_test_ardupilotmega(uint8_t system_id, uint8_t component_id, mavlink_message_t *last_msg)
 {
     mavlink_test_sensor_offsets(system_id, component_id, last_msg);
@@ -4588,6 +4714,8 @@ static void mavlink_test_ardupilotmega(uint8_t system_id, uint8_t component_id, 
     mavlink_test_ui_to_px4_mode(system_id, component_id, last_msg);
     mavlink_test_ui_to_px4_cruiseparam(system_id, component_id, last_msg);
     mavlink_test_ui_to_px4_missionstate(system_id, component_id, last_msg);
+    mavlink_test_battery_sensor_info(system_id, component_id, last_msg);
+    mavlink_test_battery_sensor_control(system_id, component_id, last_msg);
 }
 
 #ifdef __cplusplus
